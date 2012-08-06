@@ -9,5 +9,6 @@ class Picture < ActiveRecord::Base
   has_many :comments, :as => :commentable, :dependent => :destroy
 
   validates :owner_id, :presence => true
+  validates :gallery_id, :presence => true
   validates :file, :presence => true
 end

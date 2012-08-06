@@ -1,11 +1,11 @@
 # encoding: utf-8
 
 class PictureUploader < CarrierWave::Uploader::Base
+  include CarrierWave::MimeTypes
   include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :fog
+  storage :fog
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
@@ -20,7 +20,9 @@ class PictureUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
-  #
+  
+  process :set_content_type
+
   # def scale(width, height)
   #   # do something
   # end

@@ -12,7 +12,11 @@ class TestController < ApplicationController
       }
     ]
 
-    sleep 0.5
+    picture = Picture.new
+    picture.file = params[:file]
+    picture.owner = current_user
+    picture.gallery = current_user.galleries.where(:name => "My Pictures").first
+    picture.save!
     
     render :text => response.to_json, :content_type => Mime::TEXT
   end
