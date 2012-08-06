@@ -86,3 +86,119 @@ module.directive("viewTabLink", function() {
     }
   };
 });
+
+module.directive("fileUploader", function(){
+  var fileStatus = function() {
+    this._stage = null;
+    this._uploadedBytes = 0;
+    this._totalBytes = 0;
+  }
+
+  fileStatus.prototype.stage = function(nextStage) {
+    if (!nextStage) {
+      return this._stage;
+    }
+
+    this._stage = nextStage;
+    return this._stage;
+  }
+
+  fileStatus.prototype.failed = function() {
+    return this._stage == "failed";
+  }
+
+  fileStatus.prototype.ready = function() {
+    return this._stage == "ready";
+  }
+
+  fileStatus.prototype.successful = function() {
+    return this._stage == "successful";
+  }
+
+  fileStatus.prototype.uploading = function() {
+    return this._stage == "uploading";
+  }
+
+  fileStatus.prototype.percentCompleted = function() {
+    return Math.ceil((this._uploadedBytes / this._totalBytes) * 100);
+  }
+
+  return {
+    restrict: "A",
+    link: function(scope, elm, attrs) {
+      var expression = (attrs.fileUploader);
+      var params = scope.$eval(expression);
+
+      scope.uploadWidget = elm.fileupload({
+        url: elm[0].action,
+        //forceIframeTransport: true,
+        singleFileUploads: true,
+        sequentialUploads: true,
+        dataType: 'json',
+        add: function (e, data) {
+          data.status = new fileStatus();
+          data.status.stage("ready");
+          data.status._totalBytes = data.files[0].size;
+
+          scope.$apply(function() {
+            scope.files.push(data);
+          });
+
+          if (scope.activeUploads > 0) {
+            data.submit();
+          }
+
+          console.log("add");
+          console.log(data);
+        },
+        always: function (e, data) {
+          console.log("always");
+          scope.$apply(function(){
+            scope.activeUploads--;
+          });
+        },
+        done: function (e, data) {
+          console.log("done");
+          scope.$apply(function(){
+            data.status.stage("successful");
+          });
+        },
+        fail: function (e, data) {
+          console.log("fail");
+          scope.$apply(function() {
+            data.status.stage("failed");
+          });
+        },
+        progress: function (e, data) {
+          console.log("progress");
+          console.log(data);
+          scope.$apply(function(){
+            data.status._uploadedBytes = data.loaded;
+          });
+        },
+        progressall: function (e, data) {
+          console.log("progressall");
+          console.log(data);
+          scope.$apply(function(){});
+        },
+        send: function (e, data) {
+          console.log("send");
+
+          scope.$apply(function(){
+            data.status.stage("uploading");
+          });
+        },
+        stop: function (e) {
+          console.log("stop");
+          scope.$apply(function(){});
+        },
+        submit: function(e, data) {
+          scope.$apply(function() {
+            scope.activeUploads = scope.activeUploads || 0;
+            scope.activeUploads++;
+          });
+        }
+      });
+    }
+  }
+});

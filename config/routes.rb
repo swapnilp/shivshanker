@@ -29,10 +29,13 @@ SportsBeat::Application.routes.draw do
     end
   end
 
+  get "test/upload" => "test#upload"
+  post "test/upload" => "test#receive_upload"
+
   #get 'users/auth/facebook' => 'omniauth_callbacks#facebook_set_variables'
   devise_for :users, :skip => :registrations, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   #devise_for :users
   resources :users, :only => [:index, :show]
 
-  root :to => 'home#index'
+  root :to => "home#index"
 end
