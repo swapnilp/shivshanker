@@ -1,8 +1,10 @@
 require 'delegate'
 
+# A Season is defined as the period July 1 to June 30
+# The Season running July 1, 2011 to June 30, 2012 is identified
+# as season # 2012
+
 class Season < DelegateClass(Fixnum)
-
-
   def initialize d = nil
     d ||= Date.today
 

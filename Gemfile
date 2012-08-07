@@ -15,6 +15,7 @@ gem "redis", "~> 3.0.1"
 gem "roar-rails", "~> 0.0.10"
 gem "sanitize", "~> 2.0.3"
 gem "sqlite3"
+gem "tire", "~> 0.4.2"
 
 # Gems used only for assets and not required
 # in production environments by default.

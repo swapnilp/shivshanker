@@ -1,4 +1,5 @@
-require 'likable'
+require "likable"
+require "search"
 
 class User < ActiveRecord::Base
   extend Role::Helpers
@@ -48,5 +49,31 @@ class User < ActiveRecord::Base
 
   def display_name
     first_name + " " + last_name
+  end
+
+  include Tire::Model::Callbacks
+  include Tire::Model::Search
+  include Search::ReloadHelper
+  tire do
+    settings({
+      :analysis => {
+        :filter => Search::Filters.user_filters,
+        :analyzer => Search::Analyzers.user_analyzers
+      }
+    })
+
+    mapping do
+      indexes :id, :type => 'integer'
+      indexes :name, :type => 'string', :analyzer => :user_name_analyzer
+      indexes :email, :type => 'string', :analyzer => :user_name_analyzer
+    end
+  end
+
+  def to_indexed_json
+    {
+      :id   => id,
+      :name => display_name,
+      :email => email,
+    }.to_json
   end
 end

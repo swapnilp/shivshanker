@@ -15,9 +15,7 @@ that is expected to change. Currently redis is used to implement the
 thumbs-up/likes feature. It is probably not necessary to setup redis right
 away unless your work involves that feature.
 
-Elasticsearch 0.19.2 - Similarly to redis, it is not necessary to setup
-elasticsearch right away but expect to see an import of the previous search
-code in the near future.
+Elasticsearch 0.19.2 - requires java to run
 
 For both redis and elasticsearch, you can arrange to run the daemons in
 whatever way you like, as long as the services are listening on their default
