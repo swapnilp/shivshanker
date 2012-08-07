@@ -98,7 +98,7 @@ class CreateEverything < ActiveRecord::Migration
 
     ### SPORTS
     create_table :sports do |t|
-      t.string :name, :null => false
+      t.string :name, :unique => true, :null => false
       t.string :gender_code, :null => false
       t.string :profile_picture_url
       t.timestamps
@@ -120,6 +120,8 @@ class CreateEverything < ActiveRecord::Migration
       t.string  :gender, :null => false
       t.timestamps
     end
+
+    add_index :teams, [:school_id, :sport_id, :level, :gender], :unique => true
 
     ### GAMES
     create_table :games, :force => true do |t|
@@ -213,6 +215,7 @@ class CreateEverything < ActiveRecord::Migration
       t.text :text, :null => false
       t.timestamps
     end
+
     add_index :conversation_messages, [:conversation_id]
 
     ### POSTS

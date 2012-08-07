@@ -327,6 +327,8 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
     t.datetime "updated_at", :null => false
   end
 
+  add_index "teams", ["school_id", "sport_id", "level", "gender"], :name => "index_teams_on_school_id_and_sport_id_and_level_and_gender", :unique => true
+
   create_table "user_scores", :force => true do |t|
     t.integer  "user_id",                           :null => false
     t.integer  "score_action_id",                   :null => false
