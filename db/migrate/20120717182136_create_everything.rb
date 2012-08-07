@@ -90,8 +90,8 @@ class CreateEverything < ActiveRecord::Migration
       t.string :mascot
       t.string :primary_color
       t.string :secondary_color
-      t.decimal :latitude, :null => false
-      t.decimal :longitude, :null => false
+      t.decimal :latitude, :null => false, :precision => 10, :scale => 7
+      t.decimal :longitude, :null => false, :precision => 10, :scale => 7
       t.string :timezone, :null => false
       t.timestamps
     end

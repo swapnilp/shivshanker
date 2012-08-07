@@ -256,8 +256,8 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
     t.string   "mascot"
     t.string   "primary_color"
     t.string   "secondary_color"
-    t.decimal  "latitude",        :precision => 10, :scale => 0, :null => false
-    t.decimal  "longitude",       :precision => 10, :scale => 0, :null => false
+    t.decimal  "latitude",        :precision => 10, :scale => 7, :null => false
+    t.decimal  "longitude",       :precision => 10, :scale => 7, :null => false
     t.string   "timezone",                                       :null => false
     t.datetime "created_at",                                     :null => false
     t.datetime "updated_at",                                     :null => false
