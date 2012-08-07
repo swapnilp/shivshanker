@@ -1,4 +1,19 @@
 module Search
+  def self.find_game_by_date_and_location date, latitude, longitude
+    pos = "#{latitude},#{longitude}"
+    b = date.beginning_of_day.utc.strftime("%FT%T.%3NZ")
+    e = date.end_of_day.utc.strftime("%FT%T.%3NZ")
+
+    r = Tire.search "games" do
+      query { range :datetime, :gte => b, :lte => e } 
+      sort { by :_geo_distance, :location => pos, :order => :asc, :unit => :mi }
+      filter :geo_distance, :distance => "20mi", :location => pos
+      size 5
+    end
+
+    return r.results
+  end
+
   def self.find_school(what, options = {})
     limit = [options[:limit].to_i, 5].max
     offset = [options[:offset].to_i, 0].max

@@ -81,6 +81,14 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def latitude
+    home_team.school.latitude
+  end
+
+  def longitude
+    home_team.school.longitude
+  end
+
   def my_opponent(my_team)
     if my_team.id == home_team_id
       away_team
@@ -144,5 +152,28 @@ class Game < ActiveRecord::Base
 
   def unscored?
     home_team_score.blank? || away_team_score.blank?
+  end
+
+  include Tire::Model::Callbacks
+  include Tire::Model::Search
+  include Search::ReloadHelper
+
+  tire do
+    mapping do
+      indexes :id, :type => "integer"
+      indexes :datetime, :type => "date"
+      indexes :location, :type => "geo_point", :lat_lon => true
+    end
+  end
+
+  def to_indexed_json
+    {
+      :id   => id,
+      :datetime => datetime.utc.strftime("%FT%T.%3NZ"),
+      :location => {
+        :lat => latitude,
+        :lon => longitude
+      }
+    }.to_json
   end
 end
