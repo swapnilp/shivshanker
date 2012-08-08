@@ -42,6 +42,4 @@ SportsBeat::Application.configure do
 
   # For generating roar representation urls
   config.representer.default_url_options = {:host => "localhost:3000"}
-  # Enable threaded mode
-  config.threadsafe! unless ENV['THREADSAFE'] == 'off'
 end
