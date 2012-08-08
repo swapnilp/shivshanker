@@ -32,7 +32,7 @@ class Contest < ActiveRecord::Base
 
   def currently_active?
     today = Time.zone.now
-    return (start <= today && end > today)
+    return (start <= today && self.end > today)
   end
 
   def inactive
