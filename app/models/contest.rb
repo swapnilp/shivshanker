@@ -37,7 +37,7 @@ class Contest < ActiveRecord::Base
 
   def inactive
     today = Time.zone.now
-    return end < today
+    return self.end < today
   end
 
   def initialize
