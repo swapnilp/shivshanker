@@ -41,7 +41,7 @@ fi
 
 if [ ! $RUNNING ]; then
     echo "Starting unicorn"
-    ( cd $DIR && exec bundle exec rainbows -c rainbows.rb -D )
+    ( cd $DIR && exec bundle exec unicorn -c unicorn.rb -D )
     CUR_PID=""
     while [ -z $CUR_PID ]; do
       sleep 3
