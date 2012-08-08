@@ -41,8 +41,7 @@ fi
 
 if [ ! $RUNNING ]; then
     echo "Starting unicorn"
-    #/usr/local/rvm/bin/your_unicorn_wrapper -E development -c unicorn.rb -D
-    bundle exec unicorn -c unicorn.rb -D
+    ( cd $DIR && exec bundle exec rainbows -c rainbows.rb -D )
     CUR_PID=""
     while [ -z $CUR_PID ]; do
       sleep 3
