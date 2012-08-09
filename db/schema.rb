@@ -369,4 +369,16 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id", :unique => true
 
+  create_table "videos", :force => true do |t|
+    t.integer  "owner_id",                              :null => false
+    t.string   "file",                                  :null => false
+    t.string   "caption"
+    t.integer  "comments_count",     :default => 0,     :null => false
+    t.integer  "zencoder_output_id"
+    t.integer  "zencoder_job_id"
+    t.boolean  "processed",          :default => false, :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+  end
+
 end

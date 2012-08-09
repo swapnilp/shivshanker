@@ -31,11 +31,17 @@ SportsBeat::Application.routes.draw do
 
   get "test/upload" => "test#upload"
   post "test/upload" => "test#receive_upload"
+  get "test/upload_video" => "test#upload_video"
+  post "test/upload_video" => "test#receive_video_upload"
 
   #get 'users/auth/facebook' => 'omniauth_callbacks#facebook_set_variables'
   devise_for :users, :skip => :registrations, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   #devise_for :users
   resources :users, :only => [:index, :show]
+
+  resources :videos, :only => [:show]
+
+  post "zencoder_callback" => "zencoder_callback#create", :as => :zencoder_callback
 
   root :to => "home#index"
 end

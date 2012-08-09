@@ -54,7 +54,6 @@ class PictureUploader < CarrierWave::Uploader::Base
   #   "something.jpg" if original_filename
   # end
 
-
   def geometry
     if !@file.blank?
       image = MiniMagick::Image.open(@file.file)

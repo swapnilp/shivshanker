@@ -80,3 +80,22 @@ To emit JSON, we use a gem called roar, which provides a structured way
 to generate JSON representations in a particular format (HAL). The relevant
 files are stored in app/representers. Please use and implement representers.
 Do not hand-roll JSON without checking with us.
+
+Note about Zencoder and other callback-based APIs
+
+To inform us about completed transcoding jobs, zencoder does an HTTP POST to
+a specified callback URL. This makes testing zencoder difficult on a local
+server.
+
+If at all possible you should set up your own server to test on and create
+an appropriate environment in config/environments. Don't forget to modify
+initializers, database.yml and facebook.yml. 
+
+Another possibility is the use of localhost tunneling service. Here are
+some examples (I have no first hand experience with any of them)
+
+  http://pagekite.net/
+  http://progrium.com/localtunnel/
+  https://showoff.io/
+  http://pairkit.com/
+  http://tunnlr.com/
