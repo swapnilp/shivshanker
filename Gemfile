@@ -1,6 +1,6 @@
 source "https://rubygems.org"
 
-gem "rails", "3.2.7"
+gem "rails", "3.2.8"
 gem "auto_html", "~> 1.5.3"
 gem "cancan", "~> 1.6.8"
 gem "carrierwave", "~> 0.6.2"
