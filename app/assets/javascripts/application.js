@@ -21,6 +21,7 @@
 //= require jfu/jquery.ui.widget
 //= require jfu/jquery.iframe-transport
 //= require jfu/jquery.fileupload
+//= require ckeditor/init
 //= require_tree .
 
 Array.remove = function(array, from, to) {

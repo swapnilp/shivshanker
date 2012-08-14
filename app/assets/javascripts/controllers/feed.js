@@ -88,11 +88,11 @@ function PostFormCtrl($scope, $element, $attrs, $transclude, $http, $rootScope) 
   $scope.form = $element.find("form");
 
   $scope.submit = function() {
-    $http.post($scope.url, $scope.form.toJSON()).
+      $http.post($scope.url, $scope.form.toJSON()).
       success(function(data, status, headers, config) {
-        $rootScope.$broadcast("newpost");
-        $scope.form[0].reset();
-      });
+	      $rootScope.$broadcast("newpost");
+	      $scope.form[0].reset();
+	  });
   }
 }
 PostFormCtrl.$inject = ["$scope", "$element", "$attrs", "$transclude", "$http", "$rootScope"];

@@ -26,5 +26,32 @@ module.directive("postForm", function() {
     controller: PostFormCtrl,
     link: function(scope, elt, attrs, controller) {
     }
-  };
+   };
+
 });
+
+// used for ck editor but not implemented value not bind to "ng-model = text"
+//module.directive("my:ckeditor", function (expression, compiledElement) {
+//    return function fn(element) {
+//        var scope = this;
+
+//        setTimeout(function () {
+//            CKEDITOR.replace("ck_editor", {                                                                                                                       
+//    toolbar: [['Source'], ['Cut', 'Copy', 'PasteText'], 
+//    ['Undo', 'Redo', '-', 'SelectAll', 'RemoveFormat'], 
+//    ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'], 
+//    ['SpecialChar']] });
+
+//            scope.$watch("layers[" + index + "].src", function () {
+//                if (!CKEDITOR.instances["editor-" + index]) return;
+//                if (scope[expression] == CKEDITOR.instances["editor-" + index].getData()) return;
+//                CKEDITOR.instances["editor-" + index].setData(scope[expression]);
+//            });
+
+//            CKEDITOR.instances["editor-" + index].on("change", function () {
+//                scope[expression] = CKEDITOR.instances["editor-" + index].getData();
+//                scope.$root.$eval();
+//            });
+//        }, 0);
+//    };
+//});

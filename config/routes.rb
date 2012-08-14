@@ -1,6 +1,7 @@
 SportsBeat::Application.routes.draw do
   resources :athletes, :only => [:show]
   
+  mount Ckeditor::Engine => "/ckeditor"
   get "dashboard" => "dashboard#index", :as => :dashboard
 
   get "feeds/:owner_type/:owner_id/:name" => "feeds#show", :as => :feed
