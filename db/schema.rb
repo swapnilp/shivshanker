@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120815234621) do
+ActiveRecord::Schema.define(:version => 20120816170432) do
 
   create_table "athlete_teams", :force => true do |t|
     t.integer "athlete_id",                    :null => false
@@ -39,6 +39,24 @@ ActiveRecord::Schema.define(:version => 20120815234621) do
 
   add_index "athletes", ["school_id"], :name => "index_athletes_on_school_id"
   add_index "athletes", ["user_id"], :name => "index_athletes_on_user_id"
+
+  create_table "calendar_event_invitations", :force => true do |t|
+    t.integer "calendar_event_id", :null => false
+    t.integer "creator_id",        :null => false
+    t.integer "recipient_id",      :null => false
+    t.boolean "accepted"
+  end
+
+  create_table "calendar_events", :force => true do |t|
+    t.integer  "creator_id",                    :null => false
+    t.integer  "owner_id",                      :null => false
+    t.string   "owner_type",                    :null => false
+    t.datetime "datetime",                      :null => false
+    t.string   "title",                         :null => false
+    t.string   "location"
+    t.text     "description",                   :null => false
+    t.integer  "comments_count", :default => 0, :null => false
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "author_id",        :null => false
