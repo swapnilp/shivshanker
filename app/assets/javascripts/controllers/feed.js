@@ -93,6 +93,6 @@ function PostFormCtrl($scope, $element, $attrs, $transclude, $http, $rootScope) 
 	      $rootScope.$broadcast("newpost");
 	      $scope.form[0].reset();
 	  });
-  }
+  };
 }
 PostFormCtrl.$inject = ["$scope", "$element", "$attrs", "$transclude", "$http", "$rootScope"];
