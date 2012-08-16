@@ -1,5 +1,6 @@
 require "likable"
 require "search"
+require "geo"
 
 class User < ActiveRecord::Base
   extend Role::Helpers
@@ -52,6 +53,23 @@ class User < ActiveRecord::Base
     first_name + " " + last_name
   end
 
+  def location
+    if self.athlete?
+      a = athletes.order("final_year desc").first
+      if a
+        return { :latitude => a.school.latitude, :longitude => a.school.longitude }
+      end
+    end
+
+    city = Geo.city current_sign_in_ip
+    if city
+      return { :latitude => city.latitude, :longitude => city.longitude }
+    end
+
+    # if the user's location cannot be determined, use the location of SportsBeat
+    return { :latitude => 33.670765, :longitude => -117.866477 }
+  end
+
   include Tire::Model::Callbacks
   include Tire::Model::Search
   include Search::ReloadHelper
@@ -64,17 +82,26 @@ class User < ActiveRecord::Base
     })
 
     mapping do
-      indexes :id, :type => 'integer'
-      indexes :name, :type => 'string', :analyzer => :user_name_analyzer
-      indexes :email, :type => 'string', :analyzer => :user_name_analyzer
+      indexes :id, :type => "integer"
+      indexes :name, :type => "string", :analyzer => :user_name_analyzer
+      indexes :email, :type => "string", :analyzer => :user_name_analyzer
+      indexes :role, :type => "string", :index => :not_analyzed
+      indexes :location, :type => "geo_point", :lat_lon => true
     end
   end
 
   def to_indexed_json
+    loc = self.location
+
     {
       :id   => id,
       :name => display_name,
       :email => email,
+      :role => roles.map(&:name),
+      :location => {
+        :lat => loc[:latitude],
+        :lon => loc[:longitude]
+      }
     }.to_json
   end
 end
