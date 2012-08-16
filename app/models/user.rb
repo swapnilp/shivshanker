@@ -19,6 +19,7 @@ class User < ActiveRecord::Base
   has_many :galleries, :as => :owner, :dependent => :destroy
   has_many :pictures, :as => :owner, :dependent => :destroy
   has_many :posts, :as => :author, :dependent => :destroy
+  has_and_belongs_to_many :networks
   has_roles :admin, :alumnus, :athlete, :fan, :staff
 
   after_create :create_default_galleries

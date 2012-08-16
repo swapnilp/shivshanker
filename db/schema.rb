@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802000021) do
+ActiveRecord::Schema.define(:version => 20120815234621) do
 
   create_table "athlete_teams", :force => true do |t|
     t.integer "athlete_id",                    :null => false
@@ -173,6 +173,17 @@ ActiveRecord::Schema.define(:version => 20120802000021) do
 
   add_index "monthly_scores", ["user_id", "year", "month", "value"], :name => "index_monthly_scores_on_user_id_and_year_and_month_and_value", :unique => true
 
+  create_table "networks", :force => true do |t|
+    t.string "name", :null => false
+  end
+
+  create_table "networks_users", :force => true do |t|
+    t.integer "network_id", :null => false
+    t.integer "user_id",    :null => false
+  end
+
+  add_index "networks_users", ["network_id", "user_id"], :name => "index_networks_users_on_network_id_and_user_id", :unique => true
+
   create_table "partial_registrations", :force => true do |t|
     t.string   "email",                            :null => false
     t.string   "first_name"
@@ -246,6 +257,23 @@ ActiveRecord::Schema.define(:version => 20120802000021) do
 
   add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
 
+  create_table "school_networks", :force => true do |t|
+    t.integer "network_id",   :null => false
+    t.integer "school_id",    :null => false
+    t.string  "network_type", :null => false
+  end
+
+  add_index "school_networks", ["network_id", "school_id", "network_type"], :name => "idx_school_networks", :unique => true
+
+  create_table "school_sport_networks", :force => true do |t|
+    t.integer "network_id",   :null => false
+    t.integer "school_id",    :null => false
+    t.integer "sport_id",     :null => false
+    t.string  "network_type", :null => false
+  end
+
+  add_index "school_sport_networks", ["network_id", "school_id", "sport_id", "network_type"], :name => "idx_school_sport_networks", :unique => true
+
   create_table "schools", :force => true do |t|
     t.string   "name",                                           :null => false
     t.string   "address",                                        :null => false
@@ -291,6 +319,14 @@ ActiveRecord::Schema.define(:version => 20120802000021) do
   end
 
   add_index "signup_contest_schools", ["signup_contest_id", "school_id"], :name => "idx_signup_contest_schools", :unique => true
+
+  create_table "sport_networks", :force => true do |t|
+    t.integer "network_id",   :null => false
+    t.integer "sport_id",     :null => false
+    t.string  "network_type", :null => false
+  end
+
+  add_index "sport_networks", ["network_id", "sport_id", "network_type"], :name => "idx_sport_networks", :unique => true
 
   create_table "sports", :force => true do |t|
     t.string   "name",                :null => false
