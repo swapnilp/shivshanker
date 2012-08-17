@@ -11,11 +11,13 @@ gem "geoip", "~> 1.1.2"
 gem "mime-types", "~> 1.19"
 gem "mini_magick", "~> 3.4"
 gem "mysql2", "~> 0.3.11"
+#gem "oj", "~> 1.3.4"
 gem "omniauth-facebook", "~>1.3.0"
 gem "roar-rails", "~> 0.0.10"
 gem "sanitize", "~> 2.0.3"
 gem "sqlite3"
 gem "tire", "~> 0.4.2"
+#gem "yajl-ruby", "~> 1.1.0"
 gem "zencoder", "~> 2.4.2"
 
 # Gems used only for assets and not required

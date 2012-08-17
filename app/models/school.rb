@@ -28,7 +28,7 @@ class School < ActiveRecord::Base
   def self.dump_to_json
     states = School.group(:state).select(:state).map(&:state)
     states.each do |state|
-      file = File.new(Rails.root.join('db', 'schools', "schools_#{state.downcase}.json"), "w")
+      file = File.new(Rails.root.join('db', 'seed_data', 'schools', "schools_#{state.downcase}.json"), "w")
       json = School.where(:state => state).to_json
       json = JSON.parse(json)
       json = JSON.pretty_generate(json)
@@ -38,9 +38,9 @@ class School < ActiveRecord::Base
 
   # load school latitude/longitude from json seed files
   def self.reload_latlong_from_json
-    Dir.glob(Rails.root.join('db', 'schools', '*.json')) do |filename|
+    Dir.glob(Rails.root.join('db', 'seed_data', 'schools', '*.json')) do |filename|
       json = File.read(filename)
-      data = JSON.parse(json)
+      data = MultiJson.load(json)
 
       School.transaction do
         data.each do |hash|
