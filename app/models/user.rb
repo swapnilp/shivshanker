@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
 
   has_many :athletes, :dependent => :destroy
   has_many :athlete_teams, :through => :athletes
+  has_many :schools, :through => :athletes
+  has_many :sports, :through => :teams
   has_many :teams, :through => :athlete_teams
   has_many :teammates, :through => :teams, :source => :users, :uniq => true
   has_many :galleries, :as => :owner, :dependent => :destroy

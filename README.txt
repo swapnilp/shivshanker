@@ -10,11 +10,6 @@ convenient.
 
 MySQL, from Ubuntu packages
 
-Redis 2.6.0-rc6 - Currently Redis isn't used in many places but over time
-that is expected to change. Currently redis is used to implement the
-thumbs-up/likes feature. It is probably not necessary to setup redis right
-away unless your work involves that feature.
-
 Elasticsearch 0.19.2 - requires java to run
 
 For both redis and elasticsearch, you can arrange to run the daemons in

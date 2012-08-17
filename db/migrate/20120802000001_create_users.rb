@@ -32,6 +32,7 @@ class CreateUsers < ActiveRecord::Migration
       t.date :birthdate, :null => false, :default => '1970-01-01'
       t.boolean :profile_completed, :default => false, :null => false
       t.integer :facebook_id, :limit => 8
+      t.integer :likes_cache, :null => false, :default => 0
 
       t.timestamps
     end

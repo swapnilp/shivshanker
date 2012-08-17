@@ -2,6 +2,7 @@ class School < ActiveRecord::Base
   has_many :athletes, :dependent => :destroy
   has_many :teams, :dependent => :destroy
   has_many :games, :through => :teams, :dependent => :destroy
+  has_many :users, :through => :athletes
 
   validates :name, :presence => true
   validates :address, :presence => true

@@ -72,24 +72,24 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
   add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_commentable_id"
 
   create_table "contest_users", :force => true do |t|
-    t.integer "contest_id",                      :null => false
-    t.integer "user_id",                         :null => false
-    t.boolean "eligible",     :default => false, :null => false
-    t.boolean "participated", :default => false, :null => false
+    t.integer "contest_id",                        :null => false
+    t.integer "user_id",                           :null => false
+    t.boolean "eligible_cache", :default => false, :null => false
+    t.boolean "participated",   :default => false, :null => false
   end
 
-  add_index "contest_users", ["contest_id", "user_id"], :name => "index_contest_users_on_contest_id_and_user_id"
+  add_index "contest_users", ["contest_id", "user_id"], :name => "index_contest_users_on_contest_id_and_user_id", :unique => true
 
   create_table "contests", :force => true do |t|
-    t.string   "type",                              :null => false
     t.string   "name",                              :null => false
     t.text     "html_banner"
     t.text     "description"
-    t.text     "term"
+    t.text     "terms"
     t.boolean  "published",      :default => false, :null => false
     t.binary   "criteria_blob"
-    t.datetime "start"
-    t.datetime "end"
+    t.string   "contest_type",                      :null => false
+    t.datetime "starting"
+    t.datetime "ending"
     t.datetime "entry_deadline"
   end
 
@@ -175,12 +175,15 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
   add_index "games", ["home_team_id", "away_team_id", "datetime"], :name => "index_games_on_home_team_id_and_away_team_id_and_datetime", :unique => true
 
   create_table "likes", :force => true do |t|
-    t.integer  "user_id",      :null => false
-    t.integer  "likable_id",   :null => false
-    t.string   "likable_type", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "likable_id",                  :null => false
+    t.string   "likable_type",                :null => false
+    t.integer  "user_id",                     :null => false
+    t.integer  "value",        :default => 1, :null => false
+    t.datetime "created_at",                  :null => false
   end
+
+  add_index "likes", ["likable_id", "likable_type", "user_id"], :name => "index_likes_on_likable_id_and_likable_type_and_user_id", :unique => true
+  add_index "likes", ["likable_id", "likable_type", "value"], :name => "index_likes_on_likable_id_and_likable_type_and_value", :unique => true
 
   create_table "monthly_scores", :force => true do |t|
     t.integer "user_id",                :null => false
@@ -214,13 +217,18 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
   add_index "partial_registrations", ["email"], :name => "index_partial_registrations_on_email", :unique => true
 
   create_table "picture_contest_entries", :force => true do |t|
-    t.integer  "picture_contest_id", :null => false
-    t.integer  "picture_id",         :null => false
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "picture_contest_id",                :null => false
+    t.integer  "picture_id",                        :null => false
+    t.integer  "votes",              :default => 0, :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "picture_contest_entries", ["picture_contest_id", "picture_id"], :name => "idx_picture_contest_entries", :unique => true
+
+  create_table "picture_contests", :force => true do |t|
+    t.integer "contest_id", :null => false
+  end
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id",                      :null => false
@@ -338,6 +346,10 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
 
   add_index "signup_contest_schools", ["signup_contest_id", "school_id"], :name => "idx_signup_contest_schools", :unique => true
 
+  create_table "signup_contests", :force => true do |t|
+    t.integer "contest_id", :null => false
+  end
+
   create_table "sport_networks", :force => true do |t|
     t.integer "network_id",   :null => false
     t.integer "sport_id",     :null => false
@@ -416,6 +428,7 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
     t.date     "birthdate",                           :default => '1970-01-01', :null => false
     t.boolean  "profile_completed",                   :default => false,        :null => false
     t.integer  "facebook_id",            :limit => 8
+    t.integer  "likes_cache",                         :default => 0,            :null => false
     t.datetime "created_at",                                                    :null => false
     t.datetime "updated_at",                                                    :null => false
   end
