@@ -86,8 +86,10 @@ FeedCtrl.$inject = ["$scope", "$element", "$attrs", "$transclude", "$http"];
 
 function PostFormCtrl($scope, $element, $attrs, $transclude, $http, $rootScope) {
   $scope.form = $element.find("form");
+  $scope.text = "";
 
   $scope.submit = function() {
+      $scope.form[0].text.value = $scope.text;
       $http.post($scope.url, $scope.form.toJSON()).
       success(function(data, status, headers, config) {
 	      $rootScope.$broadcast("newpost");

@@ -30,25 +30,23 @@ module.directive("postForm", function() {
 
 });
 
-module.directive("myTapp", function () {
-    //CKEDITOR.replace("ck_editor", {extraPlugins: 'onchange'})
-    return {
-    	   restrict: "E",
-	   template:'<span>asdasd</span>'
-    //CKEDITOR.replace("ck_editor", {extraPlugins: 'onchange'})
-     //   setTimeout(function () {
-     //       CKEDITOR.replace("ck_editor", {extraPlugins: 'onchange'});
+module.directive('ckEditor', function() {
+  return {
+  	 require: '?ngModel',
+    link: function(scope, elm, attr, ngModel) {
+        var ck = CKEDITOR.editor.replace('ck_editor', { toolbar : [
+         ['Bold','Italic','Font','FontSize'] ] });
 
-            //scope.$watch("layers[" + index + "].src", function () {
-            //    if (!CKEDITOR.instances["editor-" + index]) return;
-            //    if (scope[expression] == CKEDITOR.instances["editor-" + index].getData()) return;
-            //    CKEDITOR.instances["editor-" + index].setData(scope[expression]);
-            //});
+      if (!ngModel) return;
 
-            //CKEDITOR.instances["editor-" + index].on("change", function () {
-            //   scope[expression] = CKEDITOR.instances["editor-" + index].getData();
-            //    scope.$root.$eval();
-            //});
-    //    }, 0);
-    };
+      ck.on('pasteState', function() {
+        scope.$apply(function() {
+          ngModel.$setViewValue(ck.getData());
+        });
+      });
+      ngModel.$render = function(value) {
+        ck.setData(ngModel.$viewValue);
+      };
+    }
+  };
 });

@@ -5,8 +5,7 @@
       <label class="control-label">Text input</label>
       <div class="controls">
         <div class="textarea-wrapper">
-            <textarea id="ck_editor" name="text" ng-model="text" class="fullwidth"></textarea>
-	    <my-tapp></my-tapp>
+	  <textarea id="ck_editor" name="text" ck-editor ng-model="text"></textarea>
         </div>
         <p class="help-block">Supporting help text</p>
       </div>
@@ -18,17 +17,3 @@
     </div>
   </fieldset>
 </form>
-<!--<script>                                                                                                                                                           
-  $(document).ready(function () {
-  //set up the editor instance for ckeditor                                                                                                                          
-  var ckeditor = CKEDITOR.replace('ck_editor', {
-  toolbar: [['Source'], ['Cut', 'Copy', 'PasteText'],                                                                                                                
-  ['Undo', 'Redo', '-', 'SelectAll', 'RemoveFormat'],
-  ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList', '-', 'Link', 'Unlink'],
-  ['SpecialChar']]
-  });
-  
-  //$('.jquery_ckeditor').ckeditor(ckeditor);
-  });
-</script>
--->
