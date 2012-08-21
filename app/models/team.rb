@@ -11,7 +11,7 @@ class Team < ActiveRecord::Base
 
   validates :sport, :presence => true
   validates :school, :presence => true
-  validates :level, :inclusion => {:in => ['varsity', 'jrvarsity', 'freshman']}
+  validates :level, :inclusion => {:in => ['varsity', 'jrvarsity', 'froshsoph', 'freshman']}
   validates :gender, :inclusion => {:in => ['m', 'w', 'mw']}
   validates_uniqueness_of :sport_id, :scope => [:school_id, :level, :gender]
 
@@ -54,6 +54,7 @@ class Team < ActiveRecord::Base
     return case level
     when 'varsity' then 'Varsity'
     when 'jrvarsity' then 'Jr. Varsity'
+    when 'froshsoph' then 'Frosh/Soph'
     when 'freshman' then 'Freshman'
     else 'N/A'
     end
@@ -128,6 +129,7 @@ class Team < ActiveRecord::Base
     return case name
     when 'varsity' then 'V'
     when 'jrvarsity' then 'JV'
+    when 'froshsoph' then 'F/S'
     when 'freshman' then 'F'
     else 'N/A'
     end
