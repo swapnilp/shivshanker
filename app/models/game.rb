@@ -39,7 +39,7 @@ class Game < ActiveRecord::Base
   end
 
   def athletes
-    Athlete.joins(:athlete_teams).where(:athlete_teams => {:team_id => [home_id, away_id], :season_id => season_id})
+    Athlete.joins(:athlete_teams).where(:athlete_teams => {:team_id => [home_team_id, away_team_id], :season_id => season_id})
   end
 
   def display_name_for_team t
