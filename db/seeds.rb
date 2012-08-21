@@ -3,23 +3,34 @@
 #
 # Examples:
 #
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+#   cities = City.create([{ name: "Chicago" }, { name: "Copenhagen" }])
+#   Mayor.create(name: "Emanuel", city: cities.first)
+
+# Disable Mass Assignment Security while seeding
+module ActiveModel
+  module MassAssignmentSecurity
+    class Sanitizer
+      def sanitize(attributes, authorizer)
+        attributes
+      end
+    end
+  end
+end
 
 # Users
-load Rails.root.join('db', 'seeds_users.rb')
+load Rails.root.join("db", "seeds_users.rb")
 
 # Schools
-load Rails.root.join('db', 'seeds_schools.rb')
+load Rails.root.join("db", "seeds_schools.rb")
 
 # Sports and Positions
-load Rails.root.join('db', 'seeds_sports.rb')
+load Rails.root.join("db", "seeds_sports.rb")
 
 # Teams
-load Rails.root.join('db', 'seeds_teams.rb')
+load Rails.root.join("db", "seeds_teams.rb")
 
 # Athletes
-load Rails.root.join('db', 'seeds_athletes.rb')
+load Rails.root.join("db", "seeds_athletes.rb")
 
 #Score Actions
-load Rails.root.join('db', 'seeds_score_actions.rb')
+load Rails.root.join("db", "seeds_score_actions.rb")

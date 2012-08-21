@@ -2,6 +2,7 @@ class School < ActiveRecord::Base
   has_many :athletes, :dependent => :destroy
   has_many :teams, :dependent => :destroy
   has_many :games, :through => :teams, :dependent => :destroy
+  has_many :users, :through => :athletes
 
   validates :name, :presence => true
   validates :address, :presence => true
@@ -27,7 +28,7 @@ class School < ActiveRecord::Base
   def self.dump_to_json
     states = School.group(:state).select(:state).map(&:state)
     states.each do |state|
-      file = File.new(Rails.root.join('db', 'schools', "schools_#{state.downcase}.json"), "w")
+      file = File.new(Rails.root.join('db', 'seed_data', 'schools', "schools_#{state.downcase}.json"), "w")
       json = School.where(:state => state).to_json
       json = JSON.parse(json)
       json = JSON.pretty_generate(json)
@@ -37,9 +38,9 @@ class School < ActiveRecord::Base
 
   # load school latitude/longitude from json seed files
   def self.reload_latlong_from_json
-    Dir.glob(Rails.root.join('db', 'schools', '*.json')) do |filename|
+    Dir.glob(Rails.root.join('db', 'seed_data', 'schools', '*.json')) do |filename|
       json = File.read(filename)
-      data = JSON.parse(json)
+      data = MultiJson.load(json)
 
       School.transaction do
         data.each do |hash|
@@ -95,4 +96,42 @@ class School < ActiveRecord::Base
     end
   end
 
+  # ElasticSearch integration
+  include Tire::Model::Callbacks
+  include Tire::Model::Search
+  include Search::ReloadHelper
+
+  tire do
+    settings({
+      :analysis => {
+        :filter => Search::Filters.hs_name_filters,
+        :analyzer => Search::Analyzers.hs_name_analyzers
+      }
+    })
+
+    mapping do
+      indexes :id, :type => 'integer', :index => :not_analyzed
+      indexes :name, :type => 'string', :analyzer => :hs_name_analyzer
+      indexes :address, :type => 'string', :index => :not_analyzed
+      indexes :city, :type => 'string', :analyzer => :hs_name_analyzer
+      indexes :state, :type => 'string', :index => :not_analyzed
+      indexes :zip, :type => 'integer', :index => :not_analyzed
+      indexes :location, :type => 'geo_point', :lat_lon => true
+    end
+  end
+
+  def to_indexed_json
+    {
+      :id   => id,
+      :name => name,
+      :address => address,
+      :city => city,
+      :state => state,
+      :zip => zip,
+      :location => {
+        :lat => latitude,
+        :lon => longitude
+      }
+    }.to_json
+  end
 end

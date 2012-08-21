@@ -55,9 +55,6 @@ module Search
         :must => [
           { :text => { :name => what } }
         ],
-        :must_not => [
-          { :term => { :role => 'admin' } }
-        ],
         :should => []
       }
     }
@@ -73,6 +70,15 @@ module Search
       q[:query][:bool][:must] << {
         :terms => {
           :id => user_ids
+        }
+      }
+    end
+
+    if options[:roles]
+      roles = Array(options[:roles])
+      q[:query][:bool][:must] << {
+        :terms => {
+          :role => roles
         }
       }
     end

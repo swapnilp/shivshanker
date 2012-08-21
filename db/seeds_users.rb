@@ -40,6 +40,7 @@ User.transaction do
 
   surnames = MultiJson.load Rails.root.join("db", "seed_data", "surnames.json")
   surnames.shuffle!
+  surnames = surnames[0..100]
   surnames.each do |surname|
     male = [true, false].sample
     user = User.new

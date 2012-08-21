@@ -62,5 +62,8 @@ module SportsBeat
     # Make sure these assets are compiled
     config.assets.paths << Rails.root.join("app", "assets", "partials")
     config.assets.precompile += ["html5.js"]
+
+    # Load models stored in subdirectories
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**}')]
   end
 end

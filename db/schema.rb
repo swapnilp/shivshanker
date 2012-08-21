@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120717182136) do
+ActiveRecord::Schema.define(:version => 20120816170432) do
 
   create_table "athlete_teams", :force => true do |t|
     t.integer "athlete_id",                    :null => false
@@ -40,6 +40,24 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   add_index "athletes", ["school_id"], :name => "index_athletes_on_school_id"
   add_index "athletes", ["user_id"], :name => "index_athletes_on_user_id"
 
+  create_table "calendar_event_invitations", :force => true do |t|
+    t.integer "calendar_event_id", :null => false
+    t.integer "creator_id",        :null => false
+    t.integer "recipient_id",      :null => false
+    t.boolean "accepted"
+  end
+
+  create_table "calendar_events", :force => true do |t|
+    t.integer  "creator_id",                    :null => false
+    t.integer  "owner_id",                      :null => false
+    t.string   "owner_type",                    :null => false
+    t.datetime "datetime",                      :null => false
+    t.string   "title",                         :null => false
+    t.string   "location"
+    t.text     "description",                   :null => false
+    t.integer  "comments_count", :default => 0, :null => false
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "author_id",        :null => false
     t.string   "commentable_type", :null => false
@@ -54,24 +72,24 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   add_index "comments", ["commentable_type", "commentable_id"], :name => "index_comments_on_commentable_type_and_commentable_id"
 
   create_table "contest_users", :force => true do |t|
-    t.integer "contest_id",                      :null => false
-    t.integer "user_id",                         :null => false
-    t.boolean "eligible",     :default => false, :null => false
-    t.boolean "participated", :default => false, :null => false
+    t.integer "contest_id",                        :null => false
+    t.integer "user_id",                           :null => false
+    t.boolean "eligible_cache", :default => false, :null => false
+    t.boolean "participated",   :default => false, :null => false
   end
 
-  add_index "contest_users", ["contest_id", "user_id"], :name => "index_contest_users_on_contest_id_and_user_id"
+  add_index "contest_users", ["contest_id", "user_id"], :name => "index_contest_users_on_contest_id_and_user_id", :unique => true
 
   create_table "contests", :force => true do |t|
-    t.string   "type",                              :null => false
     t.string   "name",                              :null => false
     t.text     "html_banner"
     t.text     "description"
-    t.text     "term"
+    t.text     "terms"
     t.boolean  "published",      :default => false, :null => false
     t.binary   "criteria_blob"
-    t.datetime "start"
-    t.datetime "end"
+    t.string   "contest_type",                      :null => false
+    t.datetime "starting"
+    t.datetime "ending"
     t.datetime "entry_deadline"
   end
 
@@ -157,12 +175,15 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   add_index "games", ["home_team_id", "away_team_id", "datetime"], :name => "index_games_on_home_team_id_and_away_team_id_and_datetime", :unique => true
 
   create_table "likes", :force => true do |t|
-    t.integer  "user_id",      :null => false
-    t.integer  "likable_id",   :null => false
-    t.string   "likable_type", :null => false
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "likable_id",                  :null => false
+    t.string   "likable_type",                :null => false
+    t.integer  "user_id",                     :null => false
+    t.integer  "value",        :default => 1, :null => false
+    t.datetime "created_at",                  :null => false
   end
+
+  add_index "likes", ["likable_id", "likable_type", "user_id"], :name => "index_likes_on_likable_id_and_likable_type_and_user_id", :unique => true
+  add_index "likes", ["likable_id", "likable_type", "value"], :name => "index_likes_on_likable_id_and_likable_type_and_value", :unique => true
 
   create_table "monthly_scores", :force => true do |t|
     t.integer "user_id",                :null => false
@@ -172,6 +193,17 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   end
 
   add_index "monthly_scores", ["user_id", "year", "month", "value"], :name => "index_monthly_scores_on_user_id_and_year_and_month_and_value", :unique => true
+
+  create_table "networks", :force => true do |t|
+    t.string "name", :null => false
+  end
+
+  create_table "networks_users", :force => true do |t|
+    t.integer "network_id", :null => false
+    t.integer "user_id",    :null => false
+  end
+
+  add_index "networks_users", ["network_id", "user_id"], :name => "index_networks_users_on_network_id_and_user_id", :unique => true
 
   create_table "partial_registrations", :force => true do |t|
     t.string   "email",                            :null => false
@@ -185,13 +217,18 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   add_index "partial_registrations", ["email"], :name => "index_partial_registrations_on_email", :unique => true
 
   create_table "picture_contest_entries", :force => true do |t|
-    t.integer  "picture_contest_id", :null => false
-    t.integer  "picture_id",         :null => false
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "picture_contest_id",                :null => false
+    t.integer  "picture_id",                        :null => false
+    t.integer  "votes",              :default => 0, :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
   end
 
   add_index "picture_contest_entries", ["picture_contest_id", "picture_id"], :name => "idx_picture_contest_entries", :unique => true
+
+  create_table "picture_contests", :force => true do |t|
+    t.integer "contest_id", :null => false
+  end
 
   create_table "pictures", :force => true do |t|
     t.integer  "owner_id",                      :null => false
@@ -246,6 +283,23 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
 
   add_index "roles_users", ["role_id", "user_id"], :name => "index_roles_users_on_role_id_and_user_id", :unique => true
 
+  create_table "school_networks", :force => true do |t|
+    t.integer "network_id",   :null => false
+    t.integer "school_id",    :null => false
+    t.string  "network_type", :null => false
+  end
+
+  add_index "school_networks", ["network_id", "school_id", "network_type"], :name => "idx_school_networks", :unique => true
+
+  create_table "school_sport_networks", :force => true do |t|
+    t.integer "network_id",   :null => false
+    t.integer "school_id",    :null => false
+    t.integer "sport_id",     :null => false
+    t.string  "network_type", :null => false
+  end
+
+  add_index "school_sport_networks", ["network_id", "school_id", "sport_id", "network_type"], :name => "idx_school_sport_networks", :unique => true
+
   create_table "schools", :force => true do |t|
     t.string   "name",                                           :null => false
     t.string   "address",                                        :null => false
@@ -291,6 +345,18 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
   end
 
   add_index "signup_contest_schools", ["signup_contest_id", "school_id"], :name => "idx_signup_contest_schools", :unique => true
+
+  create_table "signup_contests", :force => true do |t|
+    t.integer "contest_id", :null => false
+  end
+
+  create_table "sport_networks", :force => true do |t|
+    t.integer "network_id",   :null => false
+    t.integer "sport_id",     :null => false
+    t.string  "network_type", :null => false
+  end
+
+  add_index "sport_networks", ["network_id", "sport_id", "network_type"], :name => "idx_sport_networks", :unique => true
 
   create_table "sports", :force => true do |t|
     t.string   "name",                :null => false
@@ -362,12 +428,15 @@ ActiveRecord::Schema.define(:version => 20120717182136) do
     t.date     "birthdate",                           :default => '1970-01-01', :null => false
     t.boolean  "profile_completed",                   :default => false,        :null => false
     t.integer  "facebook_id",            :limit => 8
+    t.integer  "likes_cache",                         :default => 0,            :null => false
     t.datetime "created_at",                                                    :null => false
     t.datetime "updated_at",                                                    :null => false
   end
 
+  add_index "users", ["confirmation_token"], :name => "index_users_on_confirmation_token", :unique => true
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
   add_index "users", ["facebook_id"], :name => "index_users_on_facebook_id", :unique => true
+  add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
 
   create_table "videos", :force => true do |t|
     t.integer  "owner_id",                              :null => false
