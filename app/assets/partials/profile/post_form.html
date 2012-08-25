@@ -6,6 +6,7 @@
       <div class="controls">
         <div class="textarea-wrapper">
 	  <textarea id="ck_editor" name="text" ck-editor ng-model="text"></textarea>
+	  <input type="file" name="browse" />
         </div>
         <p class="help-block">Supporting help text</p>
       </div>
@@ -14,6 +15,7 @@
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">Post</button>
       <button class="btn">Cancel</button>
+      <a ng-click="uploadPhoto()">UploadPhoto<a>
     </div>
   </fieldset>
 </form>

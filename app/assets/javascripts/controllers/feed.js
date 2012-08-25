@@ -96,5 +96,9 @@ function PostFormCtrl($scope, $element, $attrs, $transclude, $http, $rootScope) 
 	      $scope.form[0].reset();
 	  });
   };
+
+  $scope.uploadPhoto = function() {
+      alert($scope.form[0].text);
+  };
 }
 PostFormCtrl.$inject = ["$scope", "$element", "$attrs", "$transclude", "$http", "$rootScope"];

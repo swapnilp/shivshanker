@@ -25,10 +25,6 @@ class Post < ActiveRecord::Base
     simple_format
   end
 
-  def comments
-    Commentable.included(self)
-  end
-
   def destination_feeds
     feeds = Set.new
 
