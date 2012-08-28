@@ -174,6 +174,14 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
 
   add_index "games", ["home_team_id", "away_team_id", "datetime"], :name => "index_games_on_home_team_id_and_away_team_id_and_datetime", :unique => true
 
+  create_table "invites", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.string   "name"
+    t.string   "email",      :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "likes", :force => true do |t|
     t.integer  "likable_id",                  :null => false
     t.string   "likable_type",                :null => false
@@ -219,7 +227,7 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
   create_table "picture_contest_entries", :force => true do |t|
     t.integer  "picture_contest_id",                :null => false
     t.integer  "picture_id",                        :null => false
-    t.integer  "votes",              :default => 0, :null => false
+    t.integer  "likes_cache",        :default => 0, :null => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
   end

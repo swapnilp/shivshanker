@@ -1,0 +1,28 @@
+
+<div id="container" class="default7">
+  <div class="container clearfix">
+
+    <section class="section">
+      <div class="row">
+        <div class="width width-780 first">
+          <div class="module white-shadow-block">
+
+            <div id="tabsdfsa">
+              <ul class="menu" view-tabs123>
+                <li title="the_beat" view-tab-link><a href="#the_beat12">The Beat</a></li>
+              </ul>
+
+              <div class="tab">
+                <div ng-view></div>
+              </div>
+
+            </div>
+	    
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</div>
+

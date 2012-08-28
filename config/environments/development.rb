@@ -42,4 +42,5 @@ SportsBeat::Application.configure do
 
   # For generating roar representation urls
   config.representer.default_url_options = {:host => "localhost:3000"}
+
 end
