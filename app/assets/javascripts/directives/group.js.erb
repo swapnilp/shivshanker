@@ -1,0 +1,16 @@
+var module = angular.module("Group.directives", []);
+
+module.directive("newgroupForm", function() {
+  return {
+    restrict: "A",
+    templateUrl: "<%= asset_path 'profile/post_form.html' %>",
+    replace: false,
+    scope: {
+      url: "=postForm"
+    },
+    controller: PostFormCtrl,
+    link: function(scope, elt, attrs, controller) {
+    }
+   };
+
+});
