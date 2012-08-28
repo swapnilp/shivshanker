@@ -39,7 +39,11 @@ class Game < ActiveRecord::Base
   end
 
   def athletes
-    Athlete.joins(:athlete_teams).where(:athlete_teams => {:team_id => [home_id, away_id], :season_id => season_id})
+    Athlete.joins(:athlete_teams).where(:athlete_teams => {:team_id => [home_team_id, away_team_id], :season_id => season_id})
+  end
+
+  def away_team_users
+    away_team.users_from_season self.season_id
   end
 
   def display_name_for_team t
@@ -79,6 +83,10 @@ class Game < ActiveRecord::Base
       self.set_winner_and_loser
       self.save!
     end
+  end
+
+  def home_team_users
+    home_team.users_from_season self.season_id
   end
 
   def latitude
@@ -152,6 +160,14 @@ class Game < ActiveRecord::Base
 
   def unscored?
     home_team_score.blank? || away_team_score.blank?
+  end
+
+  def users
+    User.joins(:athletes).joins(:athlete_teams).where(
+      :athlete_teams => {
+        :team_id => [home_team_id, away_team_id], :season_id => season_id
+      }
+    )
   end
 
   include Tire::Model::Callbacks

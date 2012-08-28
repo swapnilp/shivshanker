@@ -139,4 +139,7 @@ class Team < ActiveRecord::Base
     gender_display_name + ' ' + short_name + ' ' + sport.name
   end
 
+  def users_from_season season_id
+    User.joins(:athletes).joins(:athlete_teams).where(:athlete_teams => {:team_id => self.id, :season_id => season_id})
+  end
 end

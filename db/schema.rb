@@ -219,7 +219,7 @@ ActiveRecord::Schema.define(:version => 20120816170432) do
   create_table "picture_contest_entries", :force => true do |t|
     t.integer  "picture_contest_id",                :null => false
     t.integer  "picture_id",                        :null => false
-    t.integer  "votes",              :default => 0, :null => false
+    t.integer  "likes_cache",        :default => 0, :null => false
     t.datetime "created_at",                        :null => false
     t.datetime "updated_at",                        :null => false
   end
