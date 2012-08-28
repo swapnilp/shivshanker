@@ -6,7 +6,7 @@ module.directive("newgroupForm", function() {
     templateUrl: "<%= asset_path 'profile/post_form.html' %>",
     replace: false,
     scope: {
-      url: "=postForm"
+      url: "=newpostForm"
     },
     controller: PostFormCtrl,
     link: function(scope, elt, attrs, controller) {

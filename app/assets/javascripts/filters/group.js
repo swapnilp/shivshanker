@@ -1,1 +1,1 @@
-var module = angular.module("group.filters", []);
+var module = angular.module("Group.filters", []);
