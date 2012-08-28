@@ -1,0 +1,7 @@
+var module = angular.module("Invite", ["global", "Invite.filters", "Invite.services"]);
+
+module.config(['$routeProvider', function($routeProvider) {
+  $routeProvider.when("/invite_fb", {template: "invite_fb"});
+  $routeProvider.when("/invite_google", {template: "invite_google"}); 
+  $routeProvider.otherwise({redirectTo: "/invite_menual"});
+}]);

@@ -1,0 +1,52 @@
+var module = angular.module("Invite.directives", []);
+
+module.directive("feed", function(){
+  return {
+    restrict: "A",
+    replace: false,
+    scope: {
+      url: "=feed"
+    },
+    controller: FeedCtrl,
+    link: function(scope, elt, attrs, controller) {
+      scope.fetch();
+    }
+  };
+});
+
+
+module.directive("postForm", function() {
+  return {
+    restrict: "A",
+    templateUrl: "<%= asset_path 'profile/post_form.html' %>",
+    replace: false,
+    scope: {
+      url: "=postForm"
+    },
+    controller: PostFormCtrl,
+    link: function(scope, elt, attrs, controller) {
+    }
+   };
+
+});
+
+module.directive('ckEditor', function() {
+  return {
+  	 require: '?ngModel',
+    link: function(scope, elm, attr, ngModel) {
+        var ck = CKEDITOR.editor.replace('ck_editor', { toolbar : [
+         ['Bold','Italic','Font','FontSize'] ] });
+
+      if (!ngModel) return;
+
+      ck.on('pasteState', function() {
+        scope.$apply(function() {
+          ngModel.$setViewValue(ck.getData());
+        });
+      });
+      ngModel.$render = function(value) {
+        ck.setData(ngModel.$viewValue);
+      };
+    }
+  };
+});

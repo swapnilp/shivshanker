@@ -7,6 +7,8 @@ module.config(['$routeProvider', function($routeProvider) {
   $routeProvider.when("/account_info", {templateUrl: "<%= asset_path 'profile/info.html' %>"});
   $routeProvider.when("/profile_info", {template: "profile_info"});
   $routeProvider.when("/groups", {templateUrl: "<%= asset_path 'group/groups.html' %>"});
+  $routeProvider.when("/invites", {templateUrl: "<%= asset_path 'invites/invites.html' %>"});
+  $routeProvider.when("/invites#menual", {templateUrl: "<%= asset_path 'invites/menual_invites.html' %>"});
   $routeProvider.otherwise({redirectTo: "/the_beat"});
 }]);
 
