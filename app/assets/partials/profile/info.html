@@ -1,1 +1,7 @@
-asdasd
+<div ng-controller="accountInfoCtrl">
+  <form name="changePasswordForm" method="POST" csrf-tokenized class="form-horizontal">
+   Passsword : <input name="password" type="password" ng-model="password"  required/><br />
+   Confirm password: <input name="password_confirmation" type="password" ng-model="password_confirmation"  required/><br />
+    <button type="submit" ng-click="resetPassword()">Reset</button>
+  </form>
+</div>

@@ -41,8 +41,10 @@ SportsBeat::Application.routes.draw do
   #get 'users/auth/facebook' => 'omniauth_callbacks#facebook_set_variables'
   devise_for :users, :skip => :registrations, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   #devise_for :users
+  post "reset_password" => "users#reset_password"
   resources :users, :only => [:index, :show]
 
+  
   resources :videos, :only => [:show]
 
   post "zencoder_callback" => "zencoder_callback#create", :as => :zencoder_callback

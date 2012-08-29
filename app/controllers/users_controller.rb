@@ -18,4 +18,14 @@ class UsersController < ApplicationController
       format.json { render :json => user }
     end
   end
+
+  def reset_password
+    user = User.where(:id => current_user.id).first
+    message = user.update_attributes(:password => params[:password], :password_confirmation => params[:password_confirmation])
+    sign_in(user, :bypass => true)
+    respond_to do |format|
+      format.json {render :json => {:data => message}}
+    end
+    head :ok
+  end
 end
