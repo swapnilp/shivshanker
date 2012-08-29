@@ -1,16 +1,24 @@
 var module = angular.module("Group.directives", []);
 
-module.directive("newgroupForm", function() {
+module.directive("userGroup", function(){
   return {
     restrict: "A",
-    templateUrl: "<%= asset_path 'profile/post_form.html' %>",
     replace: false,
-    scope: {
-      url: "=newpostForm"
-    },
-    controller: PostFormCtrl,
+    controller: groupCtrl,
     link: function(scope, elt, attrs, controller) {
+      scope.fetch();
     }
-   };
+  };
+});
 
+module.directive("groupUser", function(){
+ return {
+    restrict: "A",
+    replace: false,
+    controller: groupCtrl,
+    templateUrl: "<%= asset_path 'group/group_users.html' %>",
+    link: function(scope, elt, attrs, controller) {
+
+    }
+  };
 });

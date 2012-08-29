@@ -1,10 +1,14 @@
-<div ng-controller="groupCtrl">
-  <input type="text" ng-model="group"/><button ng-click="addGroup()">Add group</button>
+<div user-group>
+  <form name="newGroupForm" method="POST" csrf-tokenized class="form-horizontal">
+    <input name="name" type="text" ng-model="group"  required/>
+    <button type="submit" ng-click="addGroup()">Add group</button>
+  </form>
   <br />
   <!--<select>
     <option ng-repeat="group in groups">{{group}}</option>
   </select>-->
-  <select ng-model="groupSelected">
-    <option ng-repeat="group in groups" value="{{group}}">{{group}}</option>
+  <select ng-model="selectedGroup">
+    <option ng-repeat="group in groups" value="{{group.name}}">{{group.name}}</option>
   </select>
+  <div group-user></div>
 </div>

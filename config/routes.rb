@@ -5,6 +5,9 @@ SportsBeat::Application.routes.draw do
   get "dashboard" => "dashboard#index", :as => :dashboard
 
   get "feeds/:owner_type/:owner_id/:name" => "feeds#show", :as => :feed
+  
+  post "group/new" => "groups#create"
+  get "groups" => "groups#index"
 
   resources :feed_entries, :only => [:show, :destroy]
 
