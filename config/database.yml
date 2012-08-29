@@ -42,3 +42,4 @@ production:
   database: sportsbeat2
   username: sportsbeat2
   host: localhost
+

@@ -1,8 +1,12 @@
 SportsBeat::Application.routes.draw do
   resources :athletes, :only => [:show]
   
+  post "invites/menual" => "invites#add_manual_invites"
+  get "current_user" => "invites#get_current_user"  
+
   mount Ckeditor::Engine => "/ckeditor"
   get "dashboard" => "dashboard#index", :as => :dashboard
+
 
   get "feeds/:owner_type/:owner_id/:name" => "feeds#show", :as => :feed
 

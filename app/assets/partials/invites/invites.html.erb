@@ -1,26 +1,90 @@
+<div id="container" class="default7">
+  <div class="container clearfix" ng-controller="InviteCtrl">
+    
+    <section class="section">
+      <div class="row">
+        <div class="width width-780 first">
+          <div class="module white-shadow-block">
 
-<form name="SocialInviteForm" method="POST" ng-submit="" csrf-tokenized class="form-horizontal">
-  <fieldset>
-    <legend>Invite to: </legend>
-  
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Facebook</button>
-      <button class="btn">Google</button>      
-    </div>
-  </fieldset>
-</form>
+            <div id="tabs">
+              <ul class="menu" view-tabs>
+                <li title="fb_invite" view-tab-link><a href="#fb_invite">Invite Friends from facebook</a>
+			<form name="SocialInviteForm" method="POST" ng-submit="" csrf-tokenized class="form-horizontal">
+			  <fieldset>
+			    <legend>Invite to: </legend>
+			  
+			    <div class="form-actions">
+			      <button type="submit" class="btn btn-primary">Facebook</button>			      
+			    </div>
+			  </fieldset>
+			</form>
+		</li>
+                <li title="gmail_invite" view-tab-link><a href="#gmail_invite"">Invite Friends from gmail</a>
+			<form name="SocialInviteForm" method="POST" ng-submit="" csrf-tokenized class="form-horizontal">
+			  <fieldset>
+			    <legend>Invite to: </legend>
+			  
+			    <div class="form-actions">
+			      
+			      <button class="btn">Google</button>      
+			    </div>
+			  </fieldset>
+			</form>
+
+		</li>
+
+                <li title="menually_invite" view-tab-link><a href="#menually_invite">Invite Friends Menually</a>
+
+		<div ng-controller="InviteCtrl">
+
+		    	
+		    <form name="MenualInviteForm" method="POST" csrf-tokenized class="form-horizontal">    
+			<fieldset>
+				<legend>Menual Invite to: </legend>
+
+				Name(Required): <input type="text" ng-model="user.name" name="uName" size="30" placeholder="Name" required></br>
+				Email(Required): <input class="btn-primary" ng-model="user.email" name="uEmail" type="email" size="30" placeholder="Email" required>
+				<span ng-show="MenualInviteForm.uEmail.$error.email">This is not a valid email.</span>
+				<div class="form-actions">
+					<button type="submit" ng-click="menual_submit()" ng-disabled="MenualInviteForm.$invalid" class="btn btn-primary">Invite My Friend</button>
+				      
+				</div>
+			</fieldset>
+		     </form>
+		</div>
+
+		</li>
+
+                <li title="list_invite" view-tab-link><a href="#list_invite">Invite List</a>
+
+			<form name="MenualInviteForm" method="POST" ng-submit="" csrf-tokenized class="form-horizontal">
+			  <fieldset>
+			    <legend>Invite List: </legend>
+
+			    <div class="form-actions">
+			      <button type="submit" class="btn btn-primary">Invite seleced friends</button>
+			      
+			    </div>
+			  </fieldset>
+			</form>
+		</li>
+               
+              </ul>
 
 
-<form name="MenualInviteForm" method="POST" ng-submit="" csrf-tokenized class="form-horizontal">
-  <fieldset>
-    <legend>Menual Invite to: </legend>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    Name: <input type="text" ng-model="" size="30" placeholder="Name">
-    Email: <input class="btn-primary" type="text" size="30" placeholder="Email">
-    <div class="form-actions">
-      <button type="submit" class="btn btn-primary">Invite</button>
-      
-    </div>
-  </fieldset>
-</form>
+  </div>
+</div>
+
+
+
+
+
+
+
 
