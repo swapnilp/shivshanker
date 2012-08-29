@@ -38,6 +38,8 @@ function FeedCtrl($scope, $element, $attrs, $transclude, $http) {
       url = $scope.url;
     }
 
+   
+
     $http({method: 'GET', url: url}).
       success(function(data, status, headers, config) {
         var append = true;
