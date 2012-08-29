@@ -1,5 +1,6 @@
 class Invite < ActiveRecord::Base
   belongs_to :user
+  attr_accessible :user_id ,:as=>:user
   validates_uniqueness_of :email, :scope => [:user_id], :on => :create
   # validate :not_for_existing_user, :on => :create
 

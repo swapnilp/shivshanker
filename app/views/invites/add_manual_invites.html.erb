@@ -1,0 +1,23 @@
+  <div id="all-contests">
+    <!-- //Contest Tabs//-->
+    <div class="contestTabs"><div class="tabbedwidget">
+        <ul class="tabs" style="width: 901px !important;">
+          <li class="active"><a href="#">Invite Friends</a></li>
+        </ul>
+        <div class="tab_container" style="width:900px !important;">
+          <!-- //Contest Tab 1-->
+          <div class="padit block" style="display: block;">
+              <h2>Thank you!</h2>
+              <p><%= pluralize @invites_submitted.length, 'invitation has' %> been sent.</p>
+      
+              <p class="margin fright">
+                <a class="button pbtn" href="/invites">Invite More Friends</a>
+              <p>
+
+              <div class="clearfix"></div>
+          </div>
+        </div>
+          <!-- //Contest Tab 1-->
+    </div></div>
+    <!-- //Contest Tabs//-->
+  </div>

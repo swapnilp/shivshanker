@@ -1,0 +1,289 @@
+<% content_for :javascript do %>
+<script language="javascript">
+function generateManualInviteItem() {
+  var m = $('<div>').attr({ 'class': 'manual-invite'});
+
+  var f = $('<div>').attr({ 'class': 'manual-invite-field'});
+  f.append($('<label>').text('Name (Required)'));
+  f.append($('<input/>').attr({style: 'width: 200px', type: 'text', class:'manual-invite-name', name:'invites[][name]'}));
+  m.append(f);
+
+  f = $('<div>').attr({ 'class': 'manual-invite-field'});
+  f.append($('<label>').text('Email (Required)'));
+  f.append($('<input/>').attr({type: 'email', class:'manual-invite-email', name:'invites[][email]'}));
+  m.append(f);
+
+  return m;
+}
+
+function add_invite_to_table(name, email, table, checked) {
+  var tr = $('<tr/>');
+  var td = $('<td/>').attr({class:'invite-name'});
+  $(td).append($('<input/>').attr({type: 'hidden', class:'invite-hidden-name', name: 'invites[][name]', value: name, disabled: !checked}));
+  $(td).append($('<input/>').attr({type: 'checkbox', class:'invite-checkbox', name:'invites[][email]', value: email, checked: checked}));
+  $(td).append($('<label/>').attr({htmlFor: 'invites[][]'}).html($('<b/>').text(name)));
+  $(tr).append(td);
+
+  td = $('<td/>').attr({class:'invite-email'});
+  $(td).text(email);
+  $(tr).append(td);
+  $(table).append(tr);
+
+  if (checked) {
+    $('#invite_button').attr('disabled', false);
+  }
+}
+
+function add_manual_invite_to_list(name, email) {
+  add_invite_to_table(name, email, $('table.manual-invite-list'), true);
+    $("ul.tabs li").removeClass("active");
+    $(".tab_content").hide();
+    $("ul.tabs li").eq(2).addClass("active").show();
+    $(".tab_content").eq(2).show();
+}
+
+function google_oauth_handler(authorized) {
+  if (authorized) {
+    $('#google-invites').html('<img src="/_mysportsbeatimages/5.gif"/>');
+    //$.get('/invites/import?google=true', function(data) {
+    //  load_invites();
+    //});
+    $.ajax({
+      type: 'GET',
+      url: '/oauth_consumers/google/client/m8/feeds/contacts/default/full',
+      data: { 'max-results': 1000, alt: 'json' },
+      dataType: 'json',
+      success: function(data) {
+        //$('#google-invites').text(data);
+        var contacts = {};
+
+        if (data && data.hasOwnProperty('feed') && data.feed.hasOwnProperty('entry')) {
+          for (var i = 0; i < data.feed.entry.length; i++) {
+            var e = data.feed.entry[i]
+            if (e.hasOwnProperty('title') && e.hasOwnProperty('gd$email')) {
+              if (e.title['$t'].length == 0) {
+                continue;
+              }
+
+              for (var j = 0; j < e['gd$email'].length; j++) {
+                var name = e.title['$t'];
+                var email = e['gd$email'][j]['address'];
+                contacts[email] = name;
+              }
+            }
+          }
+
+          $.ajax({
+            type: 'POST',
+            url: '/invites/check_invited',
+            dataType: 'json',
+            data: { contacts: contacts },
+            success: function(data) {
+              for (var i = 0; i < data.length; i++) {
+                delete contacts[data[i]];
+              }
+
+              if (contacts.length ==0) {
+                return;
+              }
+
+              var sorted_contacts = [];
+
+              for (var k in contacts) if (contacts.hasOwnProperty(k)) {
+                sorted_contacts.push([contacts[k], k]);
+              }
+
+              sorted_contacts.sort(function(a, b) {
+                var a_str = a[0].toLowerCase();
+                var b_str = b[0].toLowerCase();
+                if (a_str < b_str) return -1;
+                if (a_str > b_str) return 1;
+                return 0;
+              });
+
+              var table = $('table.google-invite-list');
+
+              for (var i = 0; i < sorted_contacts.length; i++) {
+                var name = sorted_contacts[i][0];
+                var email = sorted_contacts[i][1];
+                add_invite_to_table(name, email, table, false);
+              }
+
+              $('#google-invites').html('<p>Google contacts have been loaded. <strong><a href="#" class="activatetab">Click Next</a></strong> to see your list of contacts and invite your friends!</p><p><a href="#" class="activatetab button pbtn fright">Next</a></p>');
+
+              $(document).ready(function() {
+                $(".activatetab").click(function() {
+                    $("ul.tabs li:first-child").removeClass();
+                    $("ul.tabs li:last-child").addClass("active").show();
+                    $("#tabwidget_con1").hide();
+                    $("#tabwidget_con3").show();
+                });
+              });
+
+            }
+          });
+        }
+      }
+    });
+  }
+}
+
+$(document).ready(function() {
+  $('.invite-another').click(function() {
+    $('#manual-invite-form').submit();
+  });
+
+  var manual_invite_validate = $('#manual-invite-form').validate({
+    onkeyup: false,
+    onfocusout: false,
+    rules: {
+      "invites[][name]": "required",
+      "invites[][email]": {
+        required: true,
+        email: true
+      }
+    },
+    // errorPlacement: function(error, element) {},
+    // submitHandler: function(form) {
+    //   var name = $(form).find('.manual-invite-name').val();
+    //   var email = $(form).find('.manual-invite-email').val();
+
+    //   if (name && email && name.length > 0 && email.length > 0) {
+    //     add_manual_invite_to_list(name, email);
+    //     document.getElementById('manual-invite-form').reset();
+    //   }
+    // }
+  });
+
+  $('.invite-checkbox').live('click', function() {
+    if (this.checked) {
+      $(this).prev('.invite-hidden-name').attr('disabled', false);
+      $('#invite_button').attr('disabled', false);
+    } else {
+      $(this).prev('.invite-hidden-name').attr('disabled', true);
+      if ($('.invite-checkbox:checked').length == 0) {
+        $('#invite_button').attr('disabled', true);
+      }
+    }
+  });
+
+  $('.facebook-invite-friends').on('click', facebookInvitationDialog);
+
+  $(window).on('facebook.invitation_sent', function(event) {
+    $('.facebook-invitation-thank-you').show();
+  });
+  
+});
+</script>
+<% end %>
+
+<div id="invites-page">
+  <h2>Invite Your Friends to Join SportsBeat.com</h2>
+  <script type="text/javascript" language="javascript">
+    $(document).ready(function() {
+      $("ul.tabs li").eq(0).addClass("active").show();
+      $(".tab_content").eq(0).show();
+    });
+  </script>
+  <!--//InviteFriends//-->
+  <div id="tabsContainer">
+    <!-- //Contest Tabs-->
+    <div class="contestTabs">
+      <div class="tabbedwidget">
+        <ul class="tabs" style="width: 901px !important;">
+          <li><a href="#tabwidget_con0">Invite Friends from Facebook</a></li>
+          <li><a href="#tabwidget_con1">Invite Friends from gmail</a></li>
+          <li><a href="#tabwidget_con2">Invite Friends Manually</a></li>
+          <li><a href="#tabwidget_con3">Invite List</a></li>
+        </ul>
+        <div class="tab_container" style="width:900px !important;">
+          <div id="tabwidget_con0" class="tab_content">
+            <h3>Send invitations to Your Facebook Friends</h3>
+            <h4 class="facebook-invitation-thank-you">Thanks for sending invitations!</h4>
+
+            <% state = SignedRequest.sign :redirect_to => invites_url, :params => {:action => 'facebook'} %>
+            
+            <% if current_user.facebook_id && facebook_access_token %>
+              <p>Click to invite your facebook friends!</p>
+              <button class="button btn_bg facebook-invite-friends">INVITE YOUR FRIENDS</button>
+            <% elsif  current_user.facebook_id %>
+              <p>Your Facebook account was previously linked to SportsBeat. Please log into Facebook to continue.</p>
+              <form action="/facebook/login" method="get">
+                <input type="hidden" name="state" value="<%= state %>" />
+                <input type="submit" class="button btn_bg" value="Sign in with Facebook" />
+              </form>
+            <% else %>
+              <p>You must link your SportsBeat and Facebook accounts before you can send invitations.</p>
+              <p>Once your accounts are linked, you may also use Facebook to sign into SportsBeat.</p>
+              <form action="/facebook/login" method="get">
+                <input type="hidden" name="state" value="<%= state %>" />
+                <input type="submit" class="button btn_bg" value="Link Your Facebook Account" />
+              </form>
+            <% end %>
+          </div>
+
+          <!-- //Contest Tab 1-->
+          <div id="tabwidget_con1" class="tab_content">
+            <h3>Add Friends from Gmail to Your Invite List</h3>
+            <div id="google-invites" class="fleft dblock margin10">
+              <% if @user.google.nil? %>
+                <a href="javascript:void();" title="Authorize Google Contacts" onclick="oauth_add_handler('google', google_oauth_handler); window.open('/oauth_consumers/google', 'googlewindow');">
+                  <img src="http://buttons.googlesyndication.com/fusion/add.gif" border="0" style="height:25px;" />
+                  <span>Connect to Google <em>(opens a popup window)</em></span>
+                </a>
+              <% else %>
+                <script type="text/javascript">$(document).ready(function() {google_oauth_handler(true)});</script>
+              <% end %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <!-- //Contest Tab 1-->
+      
+          <!-- //Contest Tab 2-->
+          <div id="tabwidget_con2" class="tab_content">
+            <div class="invites-page-column">
+              <h3>Invite a friend</h3>
+              <%= form_tag '/invites/add_manual_invites', :id => 'manual-invite-form' do %>
+                <div class="manual-invite-field">
+                  <label>Name (Required)</label>
+                  <input type="text" class="manual-invite-name" name="invites[][name]" />
+                </div>
+                <div class="manual-invite-field">
+                  <label>Email (Required)</label>
+                  <input type="email" class="manual-invite-email" name="invites[][email]" />
+                </div>
+                <div class="manual-invite-field" style="margin-top: 11px">
+                  <button class="invite-another button">Invite my friend</button>
+                </div>
+              <!-- </form> -->
+              <% end %>
+            </div>
+          </div>
+                <!-- //Contest Tab 2-->
+                
+          <!--//Tab 3//-->
+          <div id="tabwidget_con3" class="tab_content inviteList">
+            <div class="invites-page-column first">
+              <h3>Your Invite List</h3>
+              <p>Who do you want to invite?</p>
+              <%= form_tag '/invites/add_manual_invites', :id => 'manual_add_form' do %>
+                <table cellpadding="0" cellspacing="0" class="manual-invite-list invite-list"></table>
+                <table cellpadding="0" cellspacing="0" class="google-invite-list invite-list"></table>
+                <hr/>
+                <div class="clearfix"></div>
+                <%= submit_tag 'Invite Selected Friends', :class => 'button margin10 mtop fright', :id=>'invite_button', :disabled => true %>
+              <% end %>
+            </div>
+          </div>
+          <!--//Tab 3//-->
+      </div>
+    </div>
+  </div>
+    <!-- //Contest Tabs-->
+  </div>
+  <!--//InviteFriends//-->
+
+
+</div>
+
+

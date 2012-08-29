@@ -1,0 +1,20 @@
+<% if invites && invites.length > 0 %>
+
+  <%= form_tag '/invites/send_invitations' do %>
+    <div class="invite-list-container">
+    <table>
+    <% invites.each do |i| %>
+      <tr>
+        <td><%= check_box_tag 'invitations[]', i.id %></td>
+        <td><b><%= label_tag 'invitations[]', i.name %></b></td>
+        <td><%= i.email %></td>
+      </tr>
+    <% end %>
+    </table>
+    </div>
+
+    <%= submit_tag 'Invite' %>
+  <% end %>
+<% elsif @service %>
+  <input type="submit" value="Load invitations" onclick="oauth_authorize('<%= @service_name %>');"/>
+<% end %>

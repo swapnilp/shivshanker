@@ -43,4 +43,18 @@ SportsBeat::Application.configure do
   # For generating roar representation urls
   config.representer.default_url_options = {:host => "localhost:3000"}
 
+config.action_mailer.default_url_options = { :host => 'localhost' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => 'localhost',
+    :user_name            => 'dummyid116@gmail.com',
+    :password             => '#####',
+    :authentication       => 'plain',
+    #:tls                  => true,
+    :enable_starttls_auto => true,
+ 
+ }
+
 end
