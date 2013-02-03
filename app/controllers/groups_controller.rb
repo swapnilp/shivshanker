@@ -20,5 +20,12 @@ class GroupsController < ApplicationController
     end
     head :ok
   end
-  
+
+  def update
+    Group.transaction do
+      group = Group.where(:id => params[:id]).first
+      group.update_attributes({:name => params[:name]})
+    end
+    head :ok
+  end
 end

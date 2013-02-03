@@ -1,0 +1,34 @@
+class UsersController < ApplicationController
+  before_filter :authenticate_user!
+  
+  def index
+    if user_signed_in?
+      redirect_to user_path current_user
+    else
+      not_found
+    end
+  end
+
+  def show
+    user = User.find params[:id]
+    user.extend UserRepresenter
+
+    respond_to do |format|
+      format.html { render :show, :locals => {:user => user} }
+      format.json { render :json => user }
+    end
+  end
+<<<<<<< HEAD
+
+  def reset_password
+    user = User.where(:id => current_user.id).first
+    message = user.update_attributes(:password => params[:password], :password_confirmation => params[:password_confirmation])
+    sign_in(user, :bypass => true)
+    respond_to do |format|
+      format.json {render :json => {:data => message}}
+    end
+    head :ok
+  end
+=======
+>>>>>>> 65c6d38b6f6475658d35a6e05e6fd1b09a88f46c
+end

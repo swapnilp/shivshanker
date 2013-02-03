@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+
+<title>class ScoreAction - Rails Application Documentation</title>
+
+<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet">
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+</script>
+
+<script type="text/javascript" charset="utf-8" src="./js/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/navigation.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search_index.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/search.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/searcher.js"></script>
+<script type="text/javascript" charset="utf-8" src="./js/darkfish.js"></script>
+
+
+<body id="top" class="class">
+<nav id="metadata">
+  <nav id="home-section" class="section">
+  <h3 class="section-header">
+    <a href="./index.html">Home</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </h3>
+</nav>
+
+
+  <nav id="search-section" class="section project-section" class="initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <h3 class="section-header">
+      <input type="text" name="search" placeholder="Search" id="search-field"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </h3>
+  </form>
+
+  <ul id="search-results" class="initially-hidden"></ul>
+</nav>
+
+
+  <div id="file-metadata">
+    <nav id="file-list-section" class="section">
+  <h3 class="section-header">Defined In</h3>
+  <ul>
+    <li>app/models/score_action.rb
+  </ul>
+</nav>
+
+    
+  </div>
+
+  <div id="class-metadata">
+    
+    <nav id="parent-class-section" class="section">
+  <h3 class="section-header">Parent</h3>
+  
+  <p class="link">ActiveRecord::Base
+  
+</nav>
+
+    
+    <!-- Method Quickref -->
+<nav id="method-list-section" class="section">
+  <h3 class="section-header">Methods</h3>
+
+  <ul class="link-list">
+    
+    <li><a href="#method-c-first_action_names">::first_action_names</a>
+    
+    <li><a href="#method-c-first_actions">::first_actions</a>
+    
+    <li><a href="#method-c-reload">::reload</a>
+    
+    <li><a href="#method-c-uncompleted_first_actions">::uncompleted_first_actions</a>
+    
+  </ul>
+</nav>
+
+  </div>
+
+  <div id="project-metadata">
+    <nav id="fileindex-section" class="section project-section">
+  <h3 class="section-header">Pages</h3>
+
+  <ul>
+  
+    <li class="file"><a href="./doc/README_FOR_APP.html">README_FOR_APP</a>
+  
+  </ul>
+</nav>
+
+    <nav id="classindex-section" class="section project-section">
+  <h3 class="section-header">Class and Module Index</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./Search.html">Search</a>
+  
+    <li><a href="./Search/Analyzers.html">Search::Analyzers</a>
+  
+    <li><a href="./Search/Filters.html">Search::Filters</a>
+  
+    <li><a href="./Search/ReloadHelper.html">Search::ReloadHelper</a>
+  
+    <li><a href="./Search/ReloadHelper/ClassMethods.html">Search::ReloadHelper::ClassMethods</a>
+  
+    <li><a href="./Role.html">Role</a>
+  
+    <li><a href="./Role/Helpers.html">Role::Helpers</a>
+  
+    <li><a href="./Ability.html">Ability</a>
+  
+    <li><a href="./ApplicationController.html">ApplicationController</a>
+  
+    <li><a href="./ApplicationHelper.html">ApplicationHelper</a>
+  
+    <li><a href="./Athlete.html">Athlete</a>
+  
+    <li><a href="./AthleteExtendedRepresenter.html">AthleteExtendedRepresenter</a>
+  
+    <li><a href="./AthleteRepresenter.html">AthleteRepresenter</a>
+  
+    <li><a href="./AthleteTeam.html">AthleteTeam</a>
+  
+    <li><a href="./CalendarEvent.html">CalendarEvent</a>
+  
+    <li><a href="./CalendarEventInvitation.html">CalendarEventInvitation</a>
+  
+    <li><a href="./Canner.html">Canner</a>
+  
+    <li><a href="./Comment.html">Comment</a>
+  
+    <li><a href="./Commentable.html">Commentable</a>
+  
+    <li><a href="./Contest.html">Contest</a>
+  
+    <li><a href="./ContestCriteriaEvaluator.html">ContestCriteriaEvaluator</a>
+  
+    <li><a href="./ContestUser.html">ContestUser</a>
+  
+    <li><a href="./Conversation.html">Conversation</a>
+  
+    <li><a href="./ConversationMessage.html">ConversationMessage</a>
+  
+    <li><a href="./ConversationVisibility.html">ConversationVisibility</a>
+  
+    <li><a href="./DashboardController.html">DashboardController</a>
+  
+    <li><a href="./ExtendedGameRepresenter.html">ExtendedGameRepresenter</a>
+  
+    <li><a href="./FeedEntry.html">FeedEntry</a>
+  
+    <li><a href="./FeedEntryRepresenter.html">FeedEntryRepresenter</a>
+  
+    <li><a href="./FeedRepresenter.html">FeedRepresenter</a>
+  
+    <li><a href="./FeedsController.html">FeedsController</a>
+  
+    <li><a href="./Gallery.html">Gallery</a>
+  
+    <li><a href="./Game.html">Game</a>
+  
+    <li><a href="./GameRepresenter.html">GameRepresenter</a>
+  
+    <li><a href="./GameTeam.html">GameTeam</a>
+  
+    <li><a href="./GamesController.html">GamesController</a>
+  
+    <li><a href="./Geo.html">Geo</a>
+  
+    <li><a href="./HomeController.html">HomeController</a>
+  
+    <li><a href="./Likable.html">Likable</a>
+  
+    <li><a href="./Like.html">Like</a>
+  
+    <li><a href="./MonthlyScore.html">MonthlyScore</a>
+  
+    <li><a href="./Network.html">Network</a>
+  
+    <li><a href="./PartialRegistration.html">PartialRegistration</a>
+  
+    <li><a href="./Picture.html">Picture</a>
+  
+    <li><a href="./PictureContest.html">PictureContest</a>
+  
+    <li><a href="./PictureContestEntry.html">PictureContestEntry</a>
+  
+    <li><a href="./PictureUploader.html">PictureUploader</a>
+  
+    <li><a href="./Position.html">Position</a>
+  
+    <li><a href="./PositionRepresenter.html">PositionRepresenter</a>
+  
+    <li><a href="./Post.html">Post</a>
+  
+    <li><a href="./PostRepresenter.html">PostRepresenter</a>
+  
+    <li><a href="./PostsController.html">PostsController</a>
+  
+    <li><a href="./ProfilePictureUploader.html">ProfilePictureUploader</a>
+  
+    <li><a href="./Roster.html">Roster</a>
+  
+    <li><a href="./RosterRepresenter.html">RosterRepresenter</a>
+  
+    <li><a href="./School.html">School</a>
+  
+    <li><a href="./SchoolNetwork.html">SchoolNetwork</a>
+  
+    <li><a href="./SchoolRepresenter.html">SchoolRepresenter</a>
+  
+    <li><a href="./SchoolSportNetwork.html">SchoolSportNetwork</a>
+  
+    <li><a href="./SchoolsController.html">SchoolsController</a>
+  
+    <li><a href="./SchoolsRepresenter.html">SchoolsRepresenter</a>
+  
+    <li><a href="./Score.html">Score</a>
+  
+    <li><a href="./ScoreAction.html">ScoreAction</a>
+  
+    <li><a href="./Season.html">Season</a>
+  
+    <li><a href="./SignupContest.html">SignupContest</a>
+  
+    <li><a href="./SignupContestSchool.html">SignupContestSchool</a>
+  
+    <li><a href="./Sport.html">Sport</a>
+  
+    <li><a href="./SportNetwork.html">SportNetwork</a>
+  
+    <li><a href="./SportPositionsRepresenter.html">SportPositionsRepresenter</a>
+  
+    <li><a href="./SportRepresenter.html">SportRepresenter</a>
+  
+    <li><a href="./SportsController.html">SportsController</a>
+  
+    <li><a href="./SportsRepresenter.html">SportsRepresenter</a>
+  
+    <li><a href="./Subscription.html">Subscription</a>
+  
+    <li><a href="./SupportContact.html">SupportContact</a>
+  
+    <li><a href="./Team.html">Team</a>
+  
+    <li><a href="./TeamGamesRepresenter.html">TeamGamesRepresenter</a>
+  
+    <li><a href="./TeamRepresenter.html">TeamRepresenter</a>
+  
+    <li><a href="./TeamsController.html">TeamsController</a>
+  
+    <li><a href="./TestController.html">TestController</a>
+  
+    <li><a href="./User.html">User</a>
+  
+    <li><a href="./UserRepresenter.html">UserRepresenter</a>
+  
+    <li><a href="./UserScore.html">UserScore</a>
+  
+    <li><a href="./UsersController.html">UsersController</a>
+  
+    <li><a href="./Video.html">Video</a>
+  
+    <li><a href="./VideoUploader.html">VideoUploader</a>
+  
+    <li><a href="./VideosController.html">VideosController</a>
+  
+    <li><a href="./ZencoderCallbackController.html">ZencoderCallbackController</a>
+  
+  </ul>
+</nav>
+
+  </div>
+</nav>
+
+<div id="documentation">
+  <h1 class="class">class ScoreAction</h1>
+
+  <div id="description" class="description">
+    
+  </div><!-- description -->
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+    <!-- Constants -->
+    <section id="constants-list" class="section">
+      <h3 class="section-header">Constants</h3>
+      <dl>
+      
+        <dt id="FIRST_ACTIONS">FIRST_ACTIONS
+        
+        <dd class="description">
+        
+      
+      </dl>
+    </section>
+    
+
+    
+
+    <!-- Methods -->
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section section">
+      <h3 class="section-header">Public Class Methods</h3>
+
+    
+      <div id="method-c-first_action_names" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">first_action_names</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="first_action_names-source">
+            <pre><span class="ruby-comment"># File app/models/score_action.rb, line 33</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">first_action_names</span>
+  <span class="ruby-constant">FIRST_ACTIONS</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- first_action_names-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- first_action_names-method -->
+
+    
+      <div id="method-c-first_actions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">first_actions</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="first_actions-source">
+            <pre><span class="ruby-comment"># File app/models/score_action.rb, line 44</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">first_actions</span> <span class="ruby-identifier">user</span>
+  <span class="ruby-constant">ScoreAction</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FIRST_ACTIONS</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- first_actions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- first_actions-method -->
+
+    
+      <div id="method-c-reload" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">reload</span><span
+            class="method-args">()</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="reload-source">
+            <pre><span class="ruby-comment"># File app/models/score_action.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">reload</span>
+  <span class="ruby-identifier">filename</span> = <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">join</span>(<span class="ruby-string">'db'</span>, <span class="ruby-string">'seed_data'</span>, <span class="ruby-string">'score_actions.json'</span>)
+  <span class="ruby-identifier">json</span> = <span class="ruby-constant">File</span>.<span class="ruby-identifier">read</span>(<span class="ruby-identifier">filename</span>)
+  <span class="ruby-identifier">actions</span> = <span class="ruby-constant">JSON</span>.<span class="ruby-identifier">parse</span>(<span class="ruby-identifier">json</span>)
+
+  <span class="ruby-constant">ScoreAction</span>.<span class="ruby-identifier">transaction</span> <span class="ruby-keyword">do</span>
+    <span class="ruby-identifier">actions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span><span class="ruby-operator">|</span>
+      <span class="ruby-identifier">sa</span> = <span class="ruby-constant">ScoreAction</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">hash</span>[<span class="ruby-string">'name'</span>]).<span class="ruby-identifier">first</span>
+      <span class="ruby-keyword">if</span> <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">nil?</span>
+        <span class="ruby-identifier">sa</span> = <span class="ruby-constant">ScoreAction</span>.<span class="ruby-identifier">new</span>
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">name</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'name'</span>]
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'description'</span>]
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">href</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'href'</span>]
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'value'</span>]
+      <span class="ruby-keyword">else</span>
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">description</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'description'</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">description</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">hash</span>[<span class="ruby-string">'description'</span>]
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">href</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'href'</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">href</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">hash</span>[<span class="ruby-string">'href'</span>]
+        <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">value</span> = <span class="ruby-identifier">hash</span>[<span class="ruby-string">'value'</span>] <span class="ruby-keyword">if</span> <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">value</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">hash</span>[<span class="ruby-string">'value'</span>]
+      <span class="ruby-keyword">end</span>
+
+      <span class="ruby-identifier">sa</span>.<span class="ruby-identifier">save!</span>
+    <span class="ruby-keyword">end</span>
+  <span class="ruby-keyword">end</span>
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- reload-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- reload-method -->
+
+    
+      <div id="method-c-uncompleted_first_actions" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">uncompleted_first_actions</span><span
+            class="method-args">(user)</span>
+          <span class="method-click-advice">click to toggle source</span>
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+
+          
+          <div class="method-source-code" id="uncompleted_first_actions-source">
+            <pre><span class="ruby-comment"># File app/models/score_action.rb, line 37</span>
+<span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">uncompleted_first_actions</span> <span class="ruby-identifier">user</span>
+  <span class="ruby-identifier">action_ids</span> = <span class="ruby-constant">ScoreAction</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">FIRST_ACTIONS</span>).<span class="ruby-identifier">select</span>(<span class="ruby-value">:id</span>).<span class="ruby-identifier">map</span>(&amp;<span class="ruby-value">:id</span>)
+  <span class="ruby-identifier">completed_action_ids</span> = <span class="ruby-constant">UserScore</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:user_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">id</span>, <span class="ruby-value">:score_action_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">action_ids</span>).<span class="ruby-identifier">group</span>(<span class="ruby-value">:score_action_id</span>).<span class="ruby-identifier">select</span>(<span class="ruby-value">:score_action_id</span>).<span class="ruby-identifier">map</span>(&amp;<span class="ruby-value">:score_action_id</span>)
+  <span class="ruby-identifier">uncompleted_action_ids</span> = <span class="ruby-identifier">action_ids</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">completed_action_ids</span>
+  <span class="ruby-constant">ScoreAction</span>.<span class="ruby-identifier">where</span>(<span class="ruby-value">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">uncompleted_action_ids</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div><!-- uncompleted_first_actions-source -->
+          
+        </div>
+
+        
+
+        
+      </div><!-- uncompleted_first_actions-method -->
+
+    
+    </section><!-- public-class-method-details -->
+  
+  </section><!-- 5Buntitled-5D -->
+
+</div><!-- documentation -->
+
+
+<footer id="validator-badges">
+  <p><a href="http://validator.w3.org/check/referer">[Validate]</a>
+  <p>Generated by <a href="https://github.com/rdoc/rdoc">RDoc</a> 3.12.
+  <p>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish Rdoc Generator</a> 3.
+</footer>
+

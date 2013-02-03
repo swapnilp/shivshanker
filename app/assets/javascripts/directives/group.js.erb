@@ -18,7 +18,12 @@ module.directive("groupUser", function(){
     controller: groupCtrl,
     templateUrl: "<%= asset_path 'group/group_users.html' %>",
     link: function(scope, elt, attrs, controller) {
+    	  scope.$watch('selectedGroup', function() {
+	  	if (scope.selectedGroup != undefined) {
+		    console.log(JSON.parse(scope.selectedGroup));
+		    }
 
+	  });
     }
   };
 });

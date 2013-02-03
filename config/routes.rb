@@ -12,6 +12,7 @@ SportsBeat::Application.routes.draw do
   
   post "group/new" => "groups#create"
   get "groups" => "groups#index"
+  put "group/update" => "groups#update"
 
   resources :feed_entries, :only => [:show, :destroy]
 

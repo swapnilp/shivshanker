@@ -1,6 +1,7 @@
 function groupCtrl($scope, $http) {
     $scope.groups = [];
     $scope.groupUsers = [];
+    $scope.show_addUser = true;
 	
     $scope.fetch = function() {
 	$http.get('groups').
@@ -14,7 +15,7 @@ function groupCtrl($scope, $http) {
 	    name:$scope.group
 	}
 	$http.post( 'group/new', newGroup ).
-	success( function( data ){
+	success( function( data ) {
 		$scope.fetch();
 		$scope.group = '';
 	    }).
@@ -22,9 +23,5 @@ function groupCtrl($scope, $http) {
 	    });
 
     };
-
-    $scope.$watch('groupSelected', function() {
-	    //alert("newValue:");
-		});
 }
 groupCtrl.$inject = ["$scope", "$http"];

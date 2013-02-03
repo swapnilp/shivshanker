@@ -1,8 +1,23 @@
 <div ng-show="selectedGroup">
-Welcome in <strong>{{selectedGroup}}</strong> Group
+Welcome in <strong>{{selectedGroup.name}}</strong> Group
 <br />
-  <a href="#add_user">Add user</a>
-  <a href="#update_group">Update Groups</a>
-  <a href="">Remove Groups</a>
+  <button ng-click='show_addUser=true'>User</button>
+  <button ng-click='show_addUser=false'>Update Groups</button>
+  <button>Remove Groups</button>
   <br />
+  
+  <div ng-show="show_addUser">
+    Group Users
+    <span ng-repeat="user in groupUsers">{{user}}</span>
+    <br />
+    All users 
+    <br />
+    <input type="text" ng-model="filter_user">
+    
+  </div>
+  <div ng-show="!show_addUser">
+    Update Group
+    <form>
+      <>
+  </div>
 </div>

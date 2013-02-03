@@ -8,7 +8,7 @@
     <option ng-repeat="group in groups">{{group}}</option>
   </select>-->
   <select ng-model="selectedGroup">
-    <option ng-repeat="group in groups" value="{{group.name}}">{{group.name}}</option>
+    <option ng-repeat="group in groups" value={{group}}>{{group.name}}</option>
   </select>
   <div group-user></div>
 </div>
